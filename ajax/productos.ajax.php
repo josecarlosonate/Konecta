@@ -33,6 +33,28 @@ class AjaxProductos{
 		echo json_encode($respuesta);
 	}
 
+    /*=============================================
+	ELIMINAR PRODUCTOS
+	=============================================*/
+    
+	public function ajaxEliminarProducto($id){
+
+		$respuesta = ControladorProductos::ctrEliminarProductos($id);
+
+		echo ($respuesta);
+	}
+
+    /*=============================================
+	TRAER PRODUCTO
+	=============================================*/
+    
+	public function ajaxTraerProducto($id){
+
+		$respuesta = ControladorProductos::ctrTraerProducto($id);
+
+		echo json_encode($respuesta);
+	}
+
 }
 
 if(isset($_POST["accion"])){
@@ -57,4 +79,17 @@ if(isset($_POST["accion"])){
             echo "error";
         }
     }
+
+    // eliminar producto 
+	if($_POST["accion"] == 'eliminar'){
+		$producto = new AjaxProductos();
+		$producto->ajaxEliminarProducto($_POST["id"]);
+	}
+
+    // traer para ver o traer para editar
+	if($_POST["accion"] == 'traer' || $_POST["accion"] == 'Editar'){
+		$producto = new AjaxProductos();
+		$producto->ajaxTraerProducto($_POST["id"]);
+	}
+
 }

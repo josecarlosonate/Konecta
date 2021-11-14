@@ -170,7 +170,35 @@ function enviarAjax(datos, accion) {
 
 // traer producto
 function traerProducto(id) {
-    console.log(id);
+    // traigo los datos del producto
+    $.ajax({
+        async: true,
+        url: "ajax/productos.ajax.php",
+        type: "POST",
+        data: {
+            accion: "traer",
+            id: id
+        },
+        success: function(response) {
+            let data = JSON.parse(response);
+            console.log(data[0]);
+
+            $('#ModalVer').modal('show');
+            let precio = data[0]['precio'];
+            precio = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 }).format(Number(precio));
+
+            $('#verNombre').val(data[0]['nombre']);
+            $('#verRef').val(data[0]['referencia']);
+            $('#verPrecio').val('$' + precio);
+            $('#verPeso').val(data[0]['peso'] + ' Kg');
+            $('#verCat').val(data[0]['categoria']);
+            $('#verStock').val(data[0]['stock']);
+            $('#fechaCreacion').val(data[0]['fcreacion']);
+            $('#fechaUp').val(data[0]['factualizacion']);
+
+
+        }
+    });
 }
 
 // editar producto
@@ -180,5 +208,48 @@ function editarProducto(id) {
 
 // eliminar producto
 function eliminarProducto(id) {
-    console.log(id);
+    Swal.fire({
+        title: "Estas segur@?",
+        text: "¡No podrás revertir esto!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "¡Sí, bórralo!",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // eliminando 
+            $.ajax({
+                async: true,
+                url: "ajax/productos.ajax.php",
+                type: "POST",
+                data: {
+                    accion: "eliminar",
+                    id: id
+                },
+                success: function(response) {
+                    console.log("delete:" + response);
+                    if (response == 'ok') {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'El producto ha sido eliminado',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        mostrarProductos();
+                    }
+                    if (response == 'error') {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: '¡Algo salió mal!',
+                            footer: 'no se pudo realizar la operacion'
+                        });
+                    }
+                }
+            });
+        }
+    });
 }

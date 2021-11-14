@@ -148,6 +148,84 @@
         </div>
     </div>
 
+    <!-- Modal traer Producto -->
+    <div class="modal fade" id="ModalVer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Detalles del producto</h5>
+                    <button type="button" id="btnCerrarM" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" id="formularioRegistro">
+                    <div class="modal-body">
+                        <!-- nombre  -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Nombre:</span>
+                            </div>
+                            <input type="text" id="verNombre" name="verNombre" class="form-control" aria-label="Username" aria-describedby="basic-addon1" readonly>
+                        </div>
+                        <!-- referencia  -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Referencia:</span>
+                            </div>
+                            <input type="text" id="verRef" name="verRef" class="form-control" aria-label="Username" aria-describedby="basic-addon1" readonly>
+                        </div>
+                        <!-- precio  -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Precio:</span>
+                            </div>
+                            <input type="text" id="verPrecio" name="verPrecio" class="form-control"  aria-describedby="basic-addon1" readonly>
+                        </div>
+                        <!-- peso  -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Peso:</span>
+                            </div>
+                            <input type="text" id="verPeso" name="verPeso" class="form-control"  aria-describedby="basic-addon1" readonly>
+                        </div>
+                        <!-- listado de categorias -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Categoria:</span>
+                            </div>
+                            <input type="text" id="verCat" name="verCat" class="form-control"  aria-describedby="basic-addon1" readonly>
+                        </div>                        
+                        <!-- stock  -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Stock:</span>
+                            </div>
+                            <input type="text" id="verStock" name="verStock" class="form-control"  aria-describedby="basic-addon1" readonly>
+                        </div>
+                        <!-- Fecha de creación -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Fecha de creación:</span>
+                            </div>
+                            <input type="text" id="fechaCreacion" name="fechaCreacion" class="form-control"  aria-describedby="basic-addon1" readonly>
+                        </div>
+                        <!-- Fecha venta -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Fecha ultima venta:</span>
+                            </div>
+                            <input type="text" id="fechaUp" name="fechaUp" class="form-control"  aria-describedby="basic-addon1" readonly>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" data-dismiss="modal" value="cerrar" class="btn btn-secondary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
         
     <!--=====================================
 	PLUGINS DE JAVASCRIPT

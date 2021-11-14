@@ -61,4 +61,43 @@ class ModeloProductos
         }
 	}
 
+    /*=============================================
+	ELIMINAR PRODUCTOS
+	=============================================*/
+
+	static public function mdlEliminarProductos($tabla, $id)
+	{
+		$db = new Conexion();
+		$stmt = $db->pdo->prepare("UPDATE $tabla SET estado = 0 WHERE id = :id");
+
+		$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+
+		$nReg = $stmt->execute();
+
+		if ($nReg > 0) {
+
+			return 'ok';
+		} else {
+
+			return 'error';
+		}
+	}
+
+    /*=============================================
+	TRAER DATOS DE PRODUCTO
+	=============================================*/
+    static public function mdlTraerProducto($tabla,$id,$tablaCat)
+    {
+        $db = new Conexion();
+		$stmt = $db->pdo->prepare("SELECT p.*, c.nombre as categoria FROM $tabla as p INNER JOIN $tablaCat as c ON p.categoria_id = c.id 
+                                    WHERE p.id = :id");
+
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+		$stmt->execute();
+
+		return $stmt->fetchAll();
+
+		$stmt = null;
+    }
+
 }

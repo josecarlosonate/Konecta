@@ -28,6 +28,31 @@ class ControladorProductos{
 
 	}
 
+    /*=============================================
+	ELIMINAR PRODUCTO
+	=============================================*/
+
+	static public function ctrEliminarProductos($id){
+		$tabla = "productos";
+
+		return ModeloProductos::mdlEliminarProductos($tabla,$id);
+        
+		
+	}
+
+    /*=============================================
+	TRAER DATOS DE PRODUCTO
+	=============================================*/
+
+	static public function ctrTraerProducto($id){
+		$tabla = "productos";
+		$tablaCateg = "categorias";
+
+		return ModeloProductos::mdlTraerProducto($tabla,$id,$tablaCateg);
+
+		
+	}
+
 }
 
 ?>
