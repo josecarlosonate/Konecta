@@ -226,6 +226,80 @@
         </div>
     </div>
 
+    <!-- Modal Editar Producto -->
+    <div class="modal fade" id="ModalEditar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar producto</h5>
+                    <button type="button" id="btnCerrarM" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" id="formularioEditar">
+                    <div class="modal-body">
+                        <h6 class="text-danger">los campos marcados con * son obligatorios</h6>
+                        <!-- nombre  -->
+                        <div class="mb-2">                            
+                            <label for="nombre">Nombre <b class="text-danger"> *</b></label>
+                            <input type="text" id="editnombre" name="editnombre" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <!-- referencia  -->
+                        <div class="mb-2">
+                            <label for="ref">Referencia <b class="text-danger"> *</b></label>
+                            <input type="text" id="editref" class="form-control" name="editref" aria-describedby="basic-addon1">
+                        </div>
+                        <!-- precio  -->
+                        <div class="mb-2">
+                            <label for="precio">Precio <b class="text-danger"> *</b></label>
+                            <input type="number" min="0" id="editprecio" class="form-control" name="editprecio" aria-describedby="basic-addon1">
+                        </div>
+
+                        <!-- peso  -->
+                        <div class="mb-2">
+                            <label for="Peso">Peso en Kilogramos <b class="text-danger"> *</b></label>
+                            <input type="number" min="0" id="editpeso" class="form-control" name="editpeso" aria-describedby="basic-addon1">
+                        </div>
+
+                        <!-- listado de categorias -->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Seleccione una categoria <b class="text-danger"> *</b></span>
+                            </div>
+                            <select class="form-control" id="editCat" name="editCat">
+                                <?php
+                                $categorias = ControladorCategorias::ctrMostrarCategorias();
+                                if (!$categorias) {
+                                ?>
+                                    <option class="text-info" value="">no existen categorias</option>
+                                    <?php
+                                } else {
+                                    foreach ($categorias as $key => $value) {
+                                    ?>
+                                        <option value="<?php echo $value["id"] ?>"><?php echo $value["nombre"] ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        
+                        <!-- stock  -->
+                        <div class="mb-2">
+                            <label for="stock">Stock <b class="text-danger"> *</b></label>
+                            <input type="number" min="0" id="editstock" class="form-control" name="editstock" aria-describedby="basic-addon1">
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="idProducto" value="">
+                        <input type="button" id="btnEditar" value="Actualizar" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
         
     <!--=====================================
 	PLUGINS DE JAVASCRIPT

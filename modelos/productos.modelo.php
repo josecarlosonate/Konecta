@@ -4,6 +4,11 @@ require_once "conexion.php";
 
 class ModeloProductos
 {
+    function __construct(){
+        //configurar zona horaria
+        date_default_timezone_set('America/Bogota');
+    }
+
     /*=============================================
 	MOSTRAR EMPLEADOS
 	=============================================*/
@@ -27,8 +32,6 @@ class ModeloProductos
 
 	static public function mdlGuardarProducto($tabla, $datos)
 	{
-        //configurar zona horaria
-        date_default_timezone_set('America/Bogota');
 
         $fechaCreacion = date('Y-m-d');
         $fechaUP = date('Y-m-d H:i:s');
@@ -89,7 +92,7 @@ class ModeloProductos
     static public function mdlTraerProducto($tabla,$id,$tablaCat)
     {
         $db = new Conexion();
-		$stmt = $db->pdo->prepare("SELECT p.*, c.nombre as categoria FROM $tabla as p INNER JOIN $tablaCat as c ON p.categoria_id = c.id 
+		$stmt = $db->pdo->prepare("SELECT p.*, c.nombre as categoria, c.id as idcat FROM $tabla as p INNER JOIN $tablaCat as c ON p.categoria_id = c.id 
                                     WHERE p.id = :id");
 
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
@@ -99,5 +102,37 @@ class ModeloProductos
 
 		$stmt = null;
     }
+
+    /*=============================================
+	EDITAR PRODUCTO
+	=============================================*/
+
+	static public function mdlEditarProducto($tabla, $id, $datos)
+	{
+        try
+            {
+                $db = new Conexion();
+                $stmt = $db->pdo->prepare("UPDATE $tabla SET nombre = :nombre, referencia = :referencia, precio = :precio, peso =:peso, categoria_id = :categoria_id, stock = :stock  WHERE id = :id");
+
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+                $stmt->bindParam(":referencia", $datos["referencia"], PDO::PARAM_STR);
+                $stmt->bindParam(":precio", $datos["precio"], PDO::PARAM_INT);
+                $stmt->bindParam(":peso", $datos["peso"], PDO::PARAM_INT);
+                $stmt->bindParam(":categoria_id", $datos["id_categoria"], PDO::PARAM_INT);
+                $stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_INT);
+
+
+                $nReg = $stmt->execute();
+
+                if ($nReg > 0) {
+                    return 'actualizado';
+                }
+            }
+        catch(Exception $e){
+            error_log('Error: '.$e->getMessage());
+            return 'error';
+        }
+	}
 
 }

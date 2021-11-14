@@ -55,6 +55,19 @@ class AjaxProductos{
 		echo json_encode($respuesta);
 	}
 
+    /*=============================================
+	EDITAR EMPLEADO
+	=============================================*/
+    
+	public function ajaxEditarProducto($id){
+
+		$datos = $this->datosProductoEdit; 
+
+		$respuesta = ControladorProductos::ctrEditarProducto($id,$datos);
+
+		echo ($respuesta);
+	}
+
 }
 
 if(isset($_POST["accion"])){
@@ -91,5 +104,21 @@ if(isset($_POST["accion"])){
 		$producto = new AjaxProductos();
 		$producto->ajaxTraerProducto($_POST["id"]);
 	}
+
+    // editar producto
+	if($_POST["accion"] == 'actualizar'){
+        $producto = new AjaxProductos();
+		$productoData = json_decode($_POST['producto'],true);
+
+        // validar con expresion regular nombre 
+        if(preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $productoData['nombre']) ){
+            $producto->datosProductoEdit = $productoData;
+
+			$producto->ajaxEditarProducto($productoData['id']);
+        }else{
+            echo "error";
+        }
+
+    }
 
 }

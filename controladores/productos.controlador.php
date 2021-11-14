@@ -53,6 +53,18 @@ class ControladorProductos{
 		
 	}
 
+    /*=============================================
+	EDITAR PRODUCTO
+	=============================================*/
+
+	static public function ctrEditarProducto($id,$datos){
+		$tabla = "productos";		
+
+		return ModeloProductos::mdlEditarProducto($tabla,$id,$datos);
+
+		
+	}
+
 }
 
 ?>

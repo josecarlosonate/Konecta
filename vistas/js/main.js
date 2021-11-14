@@ -203,7 +203,34 @@ function traerProducto(id) {
 
 // editar producto
 function editarProducto(id) {
-    console.log(id);
+    $('#formularioEditar')[0].reset();
+
+    $.ajax({
+        async: true,
+        url: "ajax/productos.ajax.php",
+        type: "POST",
+        data: {
+            accion: "Editar",
+            id: id
+        },
+        success: function(response) {
+            let data = JSON.parse(response);
+            $('#ModalEditar').modal('show')
+
+            $('#idProducto').val(data[0]['id']);
+            $('#editnombre').val(data[0]['nombre']);
+            $('#editref').val(data[0]['referencia']);
+            $('#editprecio').val(data[0]['precio']);
+            $('#editpeso').val(data[0]['peso']);
+
+
+            let categoria = $("#editCat option[value=" + data[0]['idcat'] + "]");
+            categoria.attr("selected", true);
+
+            $('#editstock').val(data[0]['stock']);
+
+        }
+    });
 }
 
 // eliminar producto
@@ -253,3 +280,65 @@ function eliminarProducto(id) {
         }
     });
 }
+
+// validar formulario Editar
+$("#formularioEditar").validate({
+    rules: {
+        nombre: {
+            required: true,
+            minlength: 4,
+        },
+        ref: {
+            required: true
+        },
+        precio: {
+            required: true,
+            number: true,
+            minlength: 3
+        },
+        peso: {
+            required: true,
+            number: true
+        },
+        sltCat: {
+            required: true
+        },
+        stock: {
+            required: true,
+            number: true
+        }
+    }
+});
+
+//editar producto
+$('#btnEditar').click(function() {
+
+    if ($("#formularioEditar").valid() == false) {
+        return;
+    }
+
+    let id = $("#idProducto").val();
+    let nombre = $("#editnombre").val();
+    let referencia = $("#editref").val();
+    let precio = $("#editprecio").val();
+    let peso = $("#editpeso").val();
+    let sltCat = $("#editCat").val();
+    let stock = $("#editstock").val();
+
+
+    // objeto de datos
+    let objDatos = {
+        id: id,
+        nombre: nombre,
+        referencia: referencia,
+        precio: precio,
+        peso: peso,
+        id_categoria: Number(sltCat),
+        stock: stock,
+        estado: 1
+    };
+
+    let accion = "actualizar";
+    enviarAjax(JSON.stringify(objDatos), accion);
+
+});
