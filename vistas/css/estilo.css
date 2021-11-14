@@ -89,3 +89,8 @@ ul.list-group {
 .btnAccion.iconoEditar {
     padding-right: 5px;
 }
+
+.card#cardLst {
+    width: 90%;
+    margin: 0 auto;
+}

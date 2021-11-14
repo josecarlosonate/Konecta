@@ -65,6 +65,15 @@ class ControladorProductos{
 		
 	}
 
+	/*=============================================
+	VENTA DE PRODUCTO
+	=============================================*/
+
+	static public function ctrVentaProducto($id){
+		$tabla = "productos";
+		return ModeloProductos::mdlVentaProducto($tabla,$id);
+	}
+
 }
 
 ?>

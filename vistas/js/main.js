@@ -64,6 +64,7 @@ function mostrarProductos() {
                 let tr = document.createElement('tr');
 
                 tr.innerHTML = `
+                <th class="text-primary">${element.id}</th>
                 <th class="text-primary">${element.nombre}</th>
                 <th class="text-primary">${element.referencia}</th>
                 <th class="text-primary">$ ${precio}</th>
@@ -159,7 +160,7 @@ function enviarAjax(datos, accion) {
             if (response == "error") {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Oops...',
+                    title: 'Error',
                     text: '¡Algo salió mal!',
                     footer: 'no se pudo realizar la operacion'
                 })
@@ -342,3 +343,75 @@ $('#btnEditar').click(function() {
     enviarAjax(JSON.stringify(objDatos), accion);
 
 });
+
+//registrar venta
+$('#btnReg').click(function() {
+    let id = $('#idPr').val();
+    var reg = /^\d+$/;
+
+    //validaciones
+    if (!id) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '¡Aun no ha ingresado un numero de ID!'
+        })
+    }
+
+    if (!reg.test(id)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: '¡Formato no permitido! Solo se aceptan numeros.'
+        })
+    }
+
+    //registar
+    $.ajax({
+        async: true,
+        url: "ajax/productos.ajax.php",
+        type: "POST",
+        data: {
+            accion: "venta",
+            id: id
+        },
+        beforeSend: function() {
+            $("#btnReg").text("Espere...");
+            $("#btnReg").prop("disabled", true);
+        },
+        success: function(response) {
+            let data = JSON.parse(response);
+            console.log(data);
+
+            if (data.code == 'success') {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: data.msn,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+
+            if (data.code == 'info') {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Información',
+                    text: data.msn
+                })
+            }
+
+            if (data.code == 'error') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.msn
+                })
+            }
+            mostrarProductos();
+            $('#ModalVenta').modal('hide');
+            $("#btnReg").prop("disabled", false);
+            $("#btnReg").text("Registar");
+        }
+    });
+})

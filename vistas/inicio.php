@@ -31,13 +31,14 @@
             <img src="vistas/img/bienvenido.svg" class="img-fluid" alt="bienvenida">
             <div>
                 <h2 class="text-center">Bienvenid@</h2>
-
             </div>
-        </div>
-        <div class="card">
+        </div>        
+    </div>
+    <div class="card" id="cardLst">
             <div class="card-header">
                 Listado de productos
                 <a class="btn btn-outline-success float-right" data-toggle="modal" data-target="#Modal"><i class="fa fa-plus"></i> Nuevo Producto</a>
+                <a class="btn btn-outline-success float-right mr-5" data-toggle="modal" data-target="#ModalVenta"><i class="fas fa-file-invoice-dollar"></i> Registrar Venta</a>
             </div>
             <div class="card-body">
                 <?php
@@ -52,6 +53,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th scope="col">&nbsp;ID</th>
                                     <th scope="col">&nbsp;Nombre</th>
                                     <th scope="col"> &nbsp;Referencia</th>
                                     <th scope="col">&nbsp;Precio</th>
@@ -73,7 +75,6 @@
                 ?>
             </div>
         </div>
-    </div>
     <br><br>
     <!-- Modal Producto -->
     <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -89,7 +90,7 @@
                     <div class="modal-body">
                         <h6 class="text-danger">los campos marcados con * son obligatorios</h6>
                         <!-- nombre  -->
-                        <div class="mb-2">                            
+                        <div class="mb-2">
                             <label for="nombre">Nombre <b class="text-danger"> *</b></label>
                             <input type="text" id="nombre" name="nombre" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
@@ -132,13 +133,13 @@
                                 ?>
                             </select>
                         </div>
-                        
+
                         <!-- stock  -->
                         <div class="mb-2">
                             <label for="stock">Stock <b class="text-danger"> *</b></label>
                             <input type="number" min="0" id="stock" class="form-control" name="stock" aria-describedby="basic-addon1">
                         </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <input type="button" id="btnGuardar" value="Guardar" class="btn btn-primary">
@@ -179,44 +180,44 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Precio:</span>
                             </div>
-                            <input type="text" id="verPrecio" name="verPrecio" class="form-control"  aria-describedby="basic-addon1" readonly>
+                            <input type="text" id="verPrecio" name="verPrecio" class="form-control" aria-describedby="basic-addon1" readonly>
                         </div>
                         <!-- peso  -->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Peso:</span>
                             </div>
-                            <input type="text" id="verPeso" name="verPeso" class="form-control"  aria-describedby="basic-addon1" readonly>
+                            <input type="text" id="verPeso" name="verPeso" class="form-control" aria-describedby="basic-addon1" readonly>
                         </div>
                         <!-- listado de categorias -->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Categoria:</span>
                             </div>
-                            <input type="text" id="verCat" name="verCat" class="form-control"  aria-describedby="basic-addon1" readonly>
-                        </div>                        
+                            <input type="text" id="verCat" name="verCat" class="form-control" aria-describedby="basic-addon1" readonly>
+                        </div>
                         <!-- stock  -->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Stock:</span>
                             </div>
-                            <input type="text" id="verStock" name="verStock" class="form-control"  aria-describedby="basic-addon1" readonly>
+                            <input type="text" id="verStock" name="verStock" class="form-control" aria-describedby="basic-addon1" readonly>
                         </div>
                         <!-- Fecha de creación -->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Fecha de creación:</span>
                             </div>
-                            <input type="text" id="fechaCreacion" name="fechaCreacion" class="form-control"  aria-describedby="basic-addon1" readonly>
+                            <input type="text" id="fechaCreacion" name="fechaCreacion" class="form-control" aria-describedby="basic-addon1" readonly>
                         </div>
                         <!-- Fecha venta -->
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Fecha ultima venta:</span>
                             </div>
-                            <input type="text" id="fechaUp" name="fechaUp" class="form-control"  aria-describedby="basic-addon1" readonly>
+                            <input type="text" id="fechaUp" name="fechaUp" class="form-control" aria-describedby="basic-addon1" readonly>
                         </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <input type="button" data-dismiss="modal" value="cerrar" class="btn btn-secondary">
@@ -240,7 +241,7 @@
                     <div class="modal-body">
                         <h6 class="text-danger">los campos marcados con * son obligatorios</h6>
                         <!-- nombre  -->
-                        <div class="mb-2">                            
+                        <div class="mb-2">
                             <label for="nombre">Nombre <b class="text-danger"> *</b></label>
                             <input type="text" id="editnombre" name="editnombre" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
@@ -283,13 +284,13 @@
                                 ?>
                             </select>
                         </div>
-                        
+
                         <!-- stock  -->
                         <div class="mb-2">
                             <label for="stock">Stock <b class="text-danger"> *</b></label>
                             <input type="number" min="0" id="editstock" class="form-control" name="editstock" aria-describedby="basic-addon1">
                         </div>
-                        
+
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" id="idProducto" value="">
@@ -300,7 +301,32 @@
         </div>
     </div>
 
-        
+    <!-- Modal Venta  -->
+    <div class="modal fade" id="ModalVenta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registar venta de producto</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="text-danger text-center"><span>Nota:</span> Para registar una venta debe ingresar el ID del producto luego presione el boton registar, recuerde que solo podra registar la venta siempre y cuando el producto cuente con Stock.</h6>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">ID:</span>
+                        </div>
+                        <input type="number" min="0" id="idPr" name="idPr" class="form-control" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnReg" class="btn btn-primary">Registrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!--=====================================
 	PLUGINS DE JAVASCRIPT
 	======================================-->

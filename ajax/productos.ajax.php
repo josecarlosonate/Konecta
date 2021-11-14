@@ -68,6 +68,15 @@ class AjaxProductos{
 		echo ($respuesta);
 	}
 
+	/*=============================================
+	VENTA DE PRODUCTO
+	=============================================*/
+
+	public function ajaxRegistrarVentaProducto($id){
+		$respuesta = ControladorProductos::ctrVentaProducto($id);
+		echo json_encode($respuesta);
+	}
+
 }
 
 if(isset($_POST["accion"])){
@@ -120,5 +129,11 @@ if(isset($_POST["accion"])){
         }
 
     }
+
+	//registrar venta
+	if($_POST["accion"] == 'venta'){
+		$producto = new AjaxProductos();
+		$producto->ajaxRegistrarVentaProducto($_POST["id"]);
+	}
 
 }

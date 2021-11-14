@@ -4,10 +4,6 @@ require_once "conexion.php";
 
 class ModeloProductos
 {
-    function __construct(){
-        //configurar zona horaria
-        date_default_timezone_set('America/Bogota');
-    }
 
     /*=============================================
 	MOSTRAR EMPLEADOS
@@ -32,7 +28,8 @@ class ModeloProductos
 
 	static public function mdlGuardarProducto($tabla, $datos)
 	{
-
+        //configurar zona horaria
+        date_default_timezone_set('America/Bogota');
         $fechaCreacion = date('Y-m-d');
         $fechaUP = date('Y-m-d H:i:s');
 
@@ -134,5 +131,66 @@ class ModeloProductos
             return 'error';
         }
 	}
+
+    /*=============================================
+	VENTA DE PRODUCTO
+	=============================================*/
+
+    static public function mdlVentaProducto($tabla, $id)
+    {
+        try{
+            //consultar si ID existe en BD
+            $db = new Conexion();
+            $stmt = $db->pdo->prepare("SELECT stock FROM $tabla WHERE id = :id AND estado = 1");
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+		    $stmt->execute();
+            $data = $stmt->fetchAll();
+            if(!$data){
+                return array(
+                    'code' => 'info',
+                    'msn' => 'El numero de ID ingresado no existe en la base de datos.'
+                );
+            }else{
+                $stock = (int)$data[0]["stock"];
+                if($stock == 0){
+                    return array(
+                        'code' => 'info',
+                        'msn' => 'No se puede registrar la venta, el stock actual del producto es cero (0)'
+                    );
+                }
+                $nuevoStock = $stock - 1;
+                date_default_timezone_set('America/Bogota');
+                $fechaUP = date('Y-m-d H:i:s');
+                $update = $db->pdo->prepare("UPDATE $tabla SET stock = :stock, factualizacion = :factualizacion  WHERE id = :id");
+                $update->bindParam(":id", $id, PDO::PARAM_INT);
+                $update->bindParam(":stock", $nuevoStock, PDO::PARAM_INT);
+                $update->bindParam(":factualizacion", $fechaUP, PDO::PARAM_STR);
+                //actualizar con nuevo stock
+                $nReg = $update->execute();
+
+                if ($nReg > 0) {
+                    return array(
+                        'code' => 'success',
+                        'msn' => 'Venta registrada con exito, Stock actual del producto: '.$nuevoStock
+                    );
+
+                } else {
+                    return array(
+                        'code' => 'error',
+                        'msn' => 'No se pudo procesar su solicitud'
+                    );
+                }
+            }
+            
+        }
+        catch(Exception $e){
+            error_log('Error: '.$e->getMessage());
+            return array(
+                'code' => 'error',
+                'msn' => 'No se pudo procesar su solicitud'
+            );
+        }
+        
+    }
 
 }
