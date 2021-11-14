@@ -1,0 +1,91 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #EDEDED;
+}
+
+.centrar {
+    margin: 0 auto;
+    max-width: 40%;
+}
+
+.centrar img {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.centrar h2 {
+    margin-bottom: 20px;
+}
+
+.centrar a {
+    display: block;
+}
+
+.modal h6 {
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.iconoEditar i,
+.iconoVer i,
+.iconoBorrar i {
+    cursor: pointer;
+}
+
+.iconoEditar i {
+    color: #FFCD07;
+}
+
+.iconoVer i {
+    color: green;
+}
+
+.iconoBorrar i {
+    color: red;
+}
+
+.input-group-prepend {
+    margin-bottom: 5px;
+}
+
+.error {
+    color: red;
+}
+
+.custom-switch {
+    padding-left: 2.25rem;
+}
+
+ul.list-group {
+    margin-bottom: 4px;
+}
+
+.btnAccion {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent !important;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.btnAccion.iconoVer,
+.btnAccion.iconoEditar {
+    padding-right: 5px;
+}
