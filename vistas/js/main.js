@@ -43,6 +43,49 @@ $("#formularioRegistro").validate({
     }
 });
 
+// traer listado de productos
+function mostrarProductos() {
+    $('#listadoProductos').empty();
+    $.ajax({
+        async: true,
+        url: "ajax/productos.ajax.php",
+        type: "POST",
+        data: {
+            accion: "consultar",
+        },
+        success: function(response) {
+            let data = JSON.parse(response);
+
+            data.forEach(element => {
+                let precio = element.precio;
+                precio = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 }).format(Number(precio));
+
+                let stock = (element.stock == 0) ? 'Sin stock' : element.stock;
+                let tr = document.createElement('tr');
+
+                tr.innerHTML = `
+                <th class="text-primary">${element.nombre}</th>
+                <th class="text-primary">${element.referencia}</th>
+                <th class="text-primary">$ ${precio}</th>
+                <th class="text-primary">${element.peso}</th>
+                <th class="text-primary">${element.categoria}</th>
+                <th class="text-primary">${stock}</th>
+                <th class="text-primary">${element.fcreacion}</th>
+                <th class="text-primary">${element.factualizacion}</th>
+                <th class="text-primary">
+                    <button class="iconoVer btnAccion" title="ver" onclick="traerProducto(${element.id})"><i class="fa fa-eye"></i></button>
+                    <button class="iconoEditar btnAccion" title="editar" onclick="editarProducto(${element.id})"><i class="fa fa-edit"></i></button>
+                    <button class="iconoBorrar btnAccion" title="eliminar" onclick="eliminarProducto(${element.id})"><i class="fa fa-trash"></i></button>
+                </th>
+                `;
+                $('#listadoProductos').append(tr);
+            });
+
+        }
+    });
+}
+mostrarProductos();
+
 // guardar datos del producto
 $("#btnGuardar").click(function() {
     if ($("#formularioRegistro").valid() == false) {
@@ -87,7 +130,6 @@ function enviarAjax(datos, accion) {
             $("#btnGuardar").prop("disabled", true);
         },
         success: function(response) {
-
             console.log(response);
             if (response == "ok") {
                 Swal.fire({
@@ -105,13 +147,13 @@ function enviarAjax(datos, accion) {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Datos del empleado actualizados',
+                    title: 'Datos del Producto actualizados',
                     showConfirmButton: false,
                     timer: 1500
                 })
                 $('#ModalEditar').modal('hide');
                 $('#formularioEditar')[0].reset();
-                mostrarEmpleados();
+                mostrarProductos();
             }
 
             if (response == "error") {
@@ -122,64 +164,9 @@ function enviarAjax(datos, accion) {
                     footer: 'no se pudo realizar la operacion'
                 })
             }
-        },
-        complete: function() {
-            //vuelvo a habilitar boton
-            $("#btnGuardar").prop("disabled", false);
-            $("#btnGuardar").val("Guardar");
-
         }
     });
 }
-
-// traer listado de productos
-function mostrarProductos() {
-    $('#listadoProductos').empty();
-    $.ajax({
-        async: true,
-        url: "ajax/productos.ajax.php",
-        type: "POST",
-        data: {
-            accion: "consultar",
-        },
-        beforeSend: function() {
-            $('#listadoProductos').html('Cargando registros...');
-        },
-        success: function(response) {
-            $('#listadoProductos').empty();
-            let data = JSON.parse(response);
-
-            data.forEach(element => {
-                let precio = element.precio;
-                precio = new Intl.NumberFormat("de-DE", { maximumFractionDigits: 0 }).format(Number(precio));
-
-                let stock = (element.stock == 0) ? 'Sin stock' : element.stock;
-                let tr = document.createElement('tr');
-                var date = new Date(Number(element.fcreacion * 1000));
-                var dateUp = new Date(Number(element.factualizacion * 1000));
-
-                tr.innerHTML = `
-                <th class="text-primary">${element.nombre}</th>
-                <th class="text-primary">${element.referencia}</th>
-                <th class="text-primary">$ ${precio}</th>
-                <th class="text-primary">${element.peso}</th>
-                <th class="text-primary">${element.categoria}</th>
-                <th class="text-primary">${stock}</th>
-                <th class="text-primary">${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}</th>
-                <th class="text-primary">${dateUp.getFullYear()}-${dateUp.getMonth()+1}-${dateUp.getDate()} ${dateUp.getHours()}:${date.getMinutes()}</th>
-                <th class="text-primary">
-                    <button class="iconoVer btnAccion" title="ver" onclick="traerProducto(${element.id})"><i class="fa fa-eye"></i></button>
-                    <button class="iconoEditar btnAccion" title="editar" onclick="editarProducto(${element.id})"><i class="fa fa-edit"></i></button>
-                    <button class="iconoBorrar btnAccion" title="eliminar" onclick="eliminarProducto(${element.id})"><i class="fa fa-trash"></i></button>
-                </th>
-                `;
-                $('#listadoProductos').append(tr);
-            });
-
-        }
-    });
-}
-mostrarProductos();
 
 // traer producto
 function traerProducto(id) {

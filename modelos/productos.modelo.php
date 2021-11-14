@@ -27,7 +27,12 @@ class ModeloProductos
 
 	static public function mdlGuardarProducto($tabla, $datos)
 	{
-        $fecha = time();
+        //configurar zona horaria
+        date_default_timezone_set('America/Bogota');
+
+        $fechaCreacion = date('Y-m-d');
+        $fechaUP = date('Y-m-d H:i:s');
+
         try
             {
                 $db = new Conexion();
@@ -39,8 +44,8 @@ class ModeloProductos
                 $stmt->bindParam(":peso", $datos["peso"], PDO::PARAM_INT);
                 $stmt->bindParam(":categoria_id", $datos["id_categoria"], PDO::PARAM_INT);
                 $stmt->bindParam(":stock", $datos["stock"], PDO::PARAM_INT);
-                $stmt->bindParam(":fcreacion", $fecha, PDO::PARAM_INT);
-                $stmt->bindParam(":factualizacion", $fecha, PDO::PARAM_INT);
+                $stmt->bindParam(":fcreacion", $fechaCreacion, PDO::PARAM_STR);
+                $stmt->bindParam(":factualizacion", $fechaUP, PDO::PARAM_STR);
                 $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_INT);
 
                 $nReg = $stmt->execute();

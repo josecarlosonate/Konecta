@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 14-11-2021 a las 01:58:13
+-- Tiempo de generación: 14-11-2021 a las 02:41:13
 -- Versión del servidor: 5.7.33
 -- Versión de PHP: 7.0.9
 
@@ -55,8 +55,8 @@ CREATE TABLE `productos` (
   `peso` int(10) NOT NULL,
   `categoria_id` int(11) NOT NULL,
   `stock` int(10) NOT NULL,
-  `fcreacion` int(11) NOT NULL,
-  `factualizacion` int(11) NOT NULL,
+  `fcreacion` date NOT NULL,
+  `factualizacion` datetime NOT NULL,
   `estado` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -65,7 +65,7 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `nombre`, `referencia`, `precio`, `peso`, `categoria_id`, `stock`, `fcreacion`, `factualizacion`, `estado`) VALUES
-(1, 'Producto 1', 'RF1', 5000, 2, 1, 0, 1636845780, 1636845780, 1);
+(1, 'Producto uno', 'RF2', 5000, 3, 1, 2, '2021-11-13', '2021-11-13 21:40:22', 1);
 
 --
 -- Índices para tablas volcadas
@@ -98,7 +98,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
